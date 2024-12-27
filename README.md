@@ -6,7 +6,7 @@ Containerized installation of Java Model Railroad Interface (https://www.jmri.or
 
 ## Usage
 
-The image comes with noVNC to allow user to view the desktop environment running JMRI with their browsers. You will be able to access the noVNC windows at [http://localhost:6901](http://localhost:6901) or use your VNC viewer with `localhost:5901`.
+The image comes with noVNC to allow the user to view the desktop environment running JMRI within their browsers. You will be able to access the noVNC windows at [http://localhost:6901](http://localhost:6901) or use your VNC viewer with `localhost:5901`.
 JMRI WebServer and WiThrottle are enabled in the default configurations. These are accessible respectively at [http://localhost:12080](http://localhost:12080) and `hostname:12090`.
 
 ![](/screenshots/Capture.png)
@@ -203,6 +203,19 @@ DockerHub link of the images:
 - [openjdk-17-jre](https://packages.debian.org/sid/openjdk-17-jre) - Full Java runtime environment
 - [JMRI](https://www.jmri.org/) - Java Model Railroad Interface
 
-## Maintainers
+## Releases
 
-[JSa1987](https://github.com/JSa1987)
+- v5.8 07-Oct-2024 - With JMRI v5.8 - [Release notes](https://www.jmri.org/releasenotes/jmri5.10.shtml)
+- v5.10 27-Dec-2024 - With JMRI v5.10 - [Release notes](https://www.jmri.org/releasenotes/jmri5.8.shtml)
+
+## Releases
+
+- v5.8 07-Oct-2024 - With JMRI v5.8 - [Release notes](https://www.jmri.org/releasenotes/jmri5.8.shtml)
+- v5.10 27-Dec-2024 - With JMRI v5.10 - [Release notes](https://www.jmri.org/releasenotes/jmri5.10.shtml)
+- Stable - Currently v.5.10
+
+## Links
+
+- Maintainer [JSa1987](https://github.com/JSa1987)
+- GitHub [https://github.com/JSa1987/jmri-docker](https://github.com/JSa1987/jmri-docker)
+- DockerHub [https://hub.docker.com/r/jsa1987/jmri-docker](https://hub.docker.com/r/jsa1987/jmri-docker)
