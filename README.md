@@ -208,6 +208,7 @@ DockerHub link of the images:
 - v5.8 07-Oct-2024 - With JMRI v5.8 - [Release notes](https://www.jmri.org/releasenotes/jmri5.8.shtml)
 - v5.10 27-Dec-2024 - With JMRI v5.10 - [Release notes](https://www.jmri.org/releasenotes/jmri5.10.shtml)
 - Stable - Currently v.5.10
+- Testing - Currently v.5.11.4
 
 ## Links
 
