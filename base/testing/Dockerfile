@@ -47,10 +47,10 @@ RUN adduser jmri sudo;\
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN adduser jmri dialout
 
-# Download and extract JMRI 5.11.4
-RUN wget https://builds.jmri.org/jenkins/job/testreleases/job/5.11.4/lastSuccessfulBuild/artifact/dist/release/JMRI.5.11.4+R87a9dadc80.tgz -P /tmp
-RUN tar xzf /tmp/JMRI.5.11.4+R87a9dadc80.tgz -C /opt
-RUN rm /tmp/JMRI.5.11.4+R87a9dadc80.tgz
+# Download and extract JMRI 5.11.5
+RUN wget https://builds.jmri.org/jenkins/job/testreleases/job/5.11.5/lastSuccessfulBuild/artifact/dist/release/JMRI.5.11.5+R6be2a2b4e8.tgz -P /tmp
+RUN tar xzf /tmp/JMRI.5.11.5+R6be2a2b4e8.tgz -C /opt
+RUN rm /tmp/JMRI.5.11.5+R6be2a2b4e8.tgz
 RUN chown -R jmri:jmri /opt/JMRI
 
 #Set user
