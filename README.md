@@ -208,7 +208,7 @@ DockerHub link of the images:
 - v5.8 07-Oct-2024 - Debian 12 (Bookworm) with JMRI v5.8 - [Release notes](https://www.jmri.org/releasenotes/jmri5.8.shtml)
 - v5.10 27-Dec-2024 - Debian 12 (Bookworm) with JMRI v5.10 - [Release notes](https://www.jmri.org/releasenotes/jmri5.10.shtml)
 - Stable - Currently Debian 12 (Bookworm) with JMRI v5.10
-- Testing - Currently Debian 12 (Bookworm) with JMRI v.5.11.5
+- Testing - Currently Debian 12 (Bookworm) with JMRI v.5.11.7
 
 ## Links
 
