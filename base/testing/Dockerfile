@@ -4,7 +4,7 @@ ENV DISPLAY=:1 \
     VNC_PORT=5901 \
     NO_VNC_PORT=6901 \
     VNC_COL_DEPTH=32 \
-    VNC_RESOLUTION=1366x768 \
+    VNC_RESOLUTION=1360x768 \
     USER_ID=61000 \
     GROUP_ID=61000
 
@@ -18,18 +18,18 @@ RUN apt-get install --no-install-recommends -y \
     wget sudo curl gpg git bzip2 vim procps python3 x11-xserver-utils \
     libnss3 libnspr4 libasound2 libgbm1 ca-certificates fonts-liberation xdg-utils \
     tigervnc-standalone-server tigervnc-common firefox-esr openjdk-17-jre nano usbutils
-RUN curl http://ftp.us.debian.org/debian/pool/main/liba/libappindicator/libappindicator3-1_0.4.92-7_amd64.deb --output /opt/libappindicator3-1_0.4.92-7_amd64.deb && \
-    curl http://ftp.us.debian.org/debian/pool/main/libi/libindicator/libindicator3-7_0.5.0-4_amd64.deb --output /opt/libindicator3-7_0.5.0-4_amd64.deb && \
-    apt-get install -y /opt/libappindicator3-1_0.4.92-7_amd64.deb /opt/libindicator3-7_0.5.0-4_amd64.deb; \
-    rm -vf /opt/lib*.deb; \
+#RUN curl http://ftp.us.debian.org/debian/pool/main/liba/libappindicator/libappindicator3-1_0.4.92-7_amd64.deb --output /opt/libappindicator3-1_0.4.92-7_amd64.deb && \
+#    curl http://ftp.us.debian.org/debian/pool/main/libi/libindicator/libindicator3-7_0.5.0-4_amd64.deb --output /opt/libindicator3-7_0.5.0-4_amd64.deb && \
+#    apt-get install -y /opt/libappindicator3-1_0.4.92-7_amd64.deb /opt/libindicator3-7_0.5.0-4_amd64.deb; \
+RUN rm -vf /opt/lib*.deb; \
     apt-get clean; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV TERM=xterm
 
 # Install NOVNC.
-RUN     git clone --branch v1.5.0 --single-branch https://github.com/novnc/noVNC.git /opt/noVNC; \
-        git clone --branch v0.12.0 --single-branch https://github.com/novnc/websockify.git /opt/noVNC/utils/websockify; \
+RUN     git clone --branch v1.6.0 --single-branch https://github.com/novnc/noVNC.git /opt/noVNC; \
+        git clone --branch v0.13.0 --single-branch https://github.com/novnc/websockify.git /opt/noVNC/utils/websockify; \
         ln -s /opt/noVNC/vnc.html /opt/noVNC/index.html
 
 # disable shared memory X11 affecting Chromium
@@ -47,10 +47,10 @@ RUN adduser jmri sudo;\
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN adduser jmri dialout
 
-# Download and extract JMRI 5.11.7
-RUN wget https://builds.jmri.org/jenkins/job/testreleases/job/5.11.7/lastSuccessfulBuild/artifact/dist/release/JMRI.5.11.7+Ra0046b3051.tgz -P /tmp
-RUN tar xzf /tmp/JMRI.5.11.7+Ra0046b3051.tgz -C /opt
-RUN rm /tmp/JMRI.5.11.7+Ra0046b3051.tgz
+# Download and extract JMRI 5.13.1
+RUN wget https://builds.jmri.org/jenkins/job/testreleases/job/5.13.1/lastSuccessfulBuild/artifact/dist/release/JMRI.5.13.1+R90aed449da.tgz -P /tmp
+RUN tar xzf /tmp/JMRI.5.13.1+R90aed449da.tgz -C /opt
+RUN rm /tmp/JMRI.5.13.1+R90aed449da.tgz
 RUN chown -R jmri:jmri /opt/JMRI
 
 #Set user
