@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:trixie-slim
 
 ENV DISPLAY=:1 \
     VNC_PORT=5901 \
@@ -7,36 +7,104 @@ ENV DISPLAY=:1 \
     VNC_RESOLUTION=1360x768 \
     USER_ID=61000 \
     GROUP_ID=61000
-
-# No interactive frontend during docker build
+    
 ENV DEBIAN_FRONTEND=noninteractive
 
-
-RUN apt-get update
-RUN apt-get install --no-install-recommends -y \
-    xvfb xauth dbus-x11 xfce4 xfce4-terminal \
-    wget sudo curl gpg git bzip2 vim procps python3 x11-xserver-utils \
-    libnss3 libnspr4 libasound2 libgbm1 ca-certificates fonts-liberation xdg-utils \
-    tigervnc-standalone-server tigervnc-common firefox-esr openjdk-17-jre nano usbutils
-#RUN curl http://ftp.us.debian.org/debian/pool/main/liba/libappindicator/libappindicator3-1_0.4.92-7_amd64.deb --output /opt/libappindicator3-1_0.4.92-7_amd64.deb && \
-#    curl http://ftp.us.debian.org/debian/pool/main/libi/libindicator/libindicator3-7_0.5.0-4_amd64.deb --output /opt/libindicator3-7_0.5.0-4_amd64.deb && \
-#    apt-get install -y /opt/libappindicator3-1_0.4.92-7_amd64.deb /opt/libindicator3-7_0.5.0-4_amd64.deb; \
-RUN rm -vf /opt/lib*.deb; \
-    apt-get clean; \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 ENV TERM=xterm
-
-# Install NOVNC.
-RUN     git clone --branch v1.6.0 --single-branch https://github.com/novnc/noVNC.git /opt/noVNC; \
-        git clone --branch v0.13.0 --single-branch https://github.com/novnc/websockify.git /opt/noVNC/utils/websockify; \
-        ln -s /opt/noVNC/vnc.html /opt/noVNC/index.html
 
 # disable shared memory X11 affecting Chromium
 ENV QT_X11_NO_MITSHM=1 \
     _X11_NO_MITSHM=1 \
     _MITSHM=0
+    
+# Language/locale settings
+# replace en_US by your desired locale setting, 
+# for example de_DE for german.
+ENV LANG=en_US.UTF-8
 
+RUN apt-get update && \
+    apt-get install -y dbus-x11 procps psmisc && \
+    apt-get install -y kmod && \
+    apt-get install -y --no-install-recommends xdg-utils xdg-user-dirs \
+                       menu-xdg desktop-file-utils
+# mesa-utils mesa-utils-extra libxv1 xz-utils mime-support
+
+RUN echo $LANG UTF-8 > /etc/locale.gen && \
+    apt-get install -y locales && \
+    update-locale --reset LANG=$LANG
+
+# LXQT desktop
+RUN apt-get install -y --no-install-recommends \
+        lxqt-core qtwayland5 xfwm4 && \
+    apt-get install -y --no-install-recommends \
+        featherpad lxqt-about lxqt-config lxqt-qtplugin oxygen-icon-theme lxqt-system-theme\
+        qlipper qterminal
+
+# config lxqt
+RUN mkdir -p /etc/skel/.config/lxqt && \
+    echo '[General]\n\
+__userfile__=true\n\
+icon_follow_color_scheme=true\n\
+icon_theme=oxygen\n\
+single_click_activate=false\n\
+theme=light\n\
+tool_bar_icon_size=24\n\
+tool_button_style=ToolButtonTextBesideIcon\n\
+wallpaper_override=true\n\
+\n\
+[Qt]\n\
+doubleClickInterval=400\n\
+font="Sans,11,-1,5,50,0,0,0,0,0"\n\
+style=Fusion\n\
+wheelScrollLines=3\n\
+' >/etc/skel/.config/lxqt/lxqt.conf && \
+    echo '[General]\n\
+__userfile__=true\n\
+[Environment]\n\
+TERM=qterminal\n\
+' >/etc/skel/.config/lxqt/session.conf
+
+# config pcmanfm-qt
+RUN mkdir -p /etc/skel/.config/pcmanfm-qt/lxqt && \
+    echo '[Behavior]\n\
+QuickExec=true\n\
+[Desktop]\n\
+ShowHidden=true\n\
+Wallpaper=/usr/share/lxqt/wallpapers/waves-logo.png\n\
+WallpaperMode=stretch\n\
+' >/etc/skel/.config/pcmanfm-qt/lxqt/settings.conf
+
+# config panel / add some launchers
+RUN mkdir -p /etc/xdg/lxqt && echo '[quicklaunch]\n\
+alignment=Left\n\
+apps\\1\desktop=/usr/share/applications/pcmanfm-qt.desktop\n\
+apps\\2\desktop=/usr/share/applications/qterminal.desktop\n\
+apps\\3\desktop=/usr/share/applications/firefox-esr.desktop\n\
+apps\\4\desktop=/home/jmri/.local/share/applications/DecoderPro.desktop\n\
+apps\\5\desktop=/home/jmri/.local/share/applications/PanelPro.desktop\n\
+apps\size=5\n\
+type=quicklaunch\n\
+\n\
+[fancymenu]\n\
+alignment=Left\n\
+favorites\\1\desktopFile=/home/jmri/.local/share/applications/DecoderPro.desktop\n\
+favorites\\2\desktopFile=/home/jmri/.local/share/applications/PanelPro.desktop\n\
+favorites\size=2\n\
+ownIcon=true\n\
+icon=/usr/share/lxqt/graphics/helix_60.png\n\
+type=fancymenu\n\
+' >> /etc/xdg/lxqt/panel.conf
+
+#Install environment for noVNC
+RUN apt-get install --no-install-recommends -y \
+    sudo git ca-certificates xvfb xauth tigervnc-standalone-server tigervnc-common python3
+# curl gpg  x11-xserver-utils libnss3 libnspr4 libasound2 libgbm1 fonts-liberation
+
+
+# Install NOVNC.
+RUN     git clone --branch v1.6.0 --single-branch https://github.com/novnc/noVNC.git /opt/noVNC; \
+        git clone --branch v0.13.0 --single-branch https://github.com/novnc/websockify.git /opt/noVNC/utils/websockify; \
+        ln -s /opt/noVNC/vnc.html /opt/noVNC/index.html
 
 # Give every user read write access to the "/root" folder where the binary is cached
 RUN ls -la /root
@@ -47,11 +115,34 @@ RUN adduser jmri sudo;\
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN adduser jmri dialout
 
+# Setup environment for JMRI and install additional software (vim, Firefox etc.)
+RUN apt-get install --no-install-recommends -y \
+    wget bzip2 openjdk-21-jre usbutils vim firefox-esr nano
+
+#Clean up
+RUN rm -vf /opt/lib*.deb; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Download and extract JMRI 5.13.2
 RUN wget https://builds.jmri.org/jenkins/job/testreleases/job/5.13.2/lastSuccessfulBuild/artifact/dist/release/JMRI.5.13.2+Rc2ecdaf40b.tgz -P /tmp
 RUN tar xzf /tmp/JMRI.5.13.2+Rc2ecdaf40b.tgz -C /opt
 RUN rm /tmp/JMRI.5.13.2+Rc2ecdaf40b.tgz
 RUN chown -R jmri:jmri /opt/JMRI
+
+#Add JMRI to Application Menu
+RUN sed -i '/<!-- Accessories submenu -->/i \
+\
+        <!-- JMRI submenu -->\
+        <Menu>\
+                <Name>JMRI</Name>\
+                <Include>\
+                        <And>\
+                                <Category>jmri</Category>\
+                            </And>\
+                </Include>\
+        </Menu> <!-- End JMRI -->\
+' /etc/xdg/menus/lxqt-applications.menu
 
 #Set user
 USER jmri
@@ -62,7 +153,7 @@ RUN echo  "debian version:  $(cat /etc/debian_version) \n" \
 #Expose port 5901 to view display using VNC Viewer, 6901 for noVNC, 12080 for WebServer, 12090 for WiThrottle, 1234 for LoconetOverTCP, 2056 for JSON server, 4303 doe SRCP server and 2048 for simple server
 EXPOSE $VNC_PORT $NO_VNC_PORT $WEBSERVER_PORT 12080 12090 1234 2056 4303 2048
 
-#Copy default configurations to /var/opt
+#Copy default jmri configurations to /var/opt
 COPY assets/ /var/opt
 #Copy entrypoint.sh and set it as entrypoint
 COPY scripts/entrypoint.sh /src

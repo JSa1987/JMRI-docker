@@ -6,4 +6,5 @@ Comment=JMRI Panel Pro
 Icon=/opt/JMRI/resources/PanelPro.gif
 Exec=/opt/JMRI/PanelPro
 Terminal=false;
+Categories=other;
         

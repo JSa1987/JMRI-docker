@@ -205,11 +205,11 @@ DockerHub link of the images:
 
 ## Releases
 
-- v5.8 07-Oct-2024 - Debian 12 (Bookworm) with JMRI v5.8 - [Release notes](https://www.jmri.org/releasenotes/jmri5.8.shtml)
-- v5.10 27-Dec-2024 - Debian 12 (Bookworm) with JMRI v5.10 - [Release notes](https://www.jmri.org/releasenotes/jmri5.10.shtml)
-- v5.12 21-Jun-2024 - Debian 12 (Bookworm) with JMRI v5.12 - [Release notes](https://www.jmri.org/releasenotes/jmri5.12.shtml)
-- Stable - Currently Debian 12 (Bookworm) with JMRI v5.12
-- Testing - Currently Debian 12 (Bookworm) with JMRI v.5.13.2
+- v5.8 07-Oct-2024 - Debian 12 (Bookworm), JRE 17, XFCE4 with JMRI v5.8 - [Release notes](https://www.jmri.org/releasenotes/jmri5.8.shtml)
+- v5.10 27-Dec-2024 - Debian 12 (Bookworm), JRE 17, XFCE4 with JMRI v5.10 - [Release notes](https://www.jmri.org/releasenotes/jmri5.10.shtml)
+- v5.12 21-Jun-2024 - Debian 12 (Bookworm), JRE 17, XFCE4 with JMRI v5.12 - [Release notes](https://www.jmri.org/releasenotes/jmri5.12.shtml)
+- Stable - Currently Debian 12 (Bookworm), JRE 17, XFCE4 with JMRI v5.12
+- Testing - Currently Debian Trixie, JRE 21, LXQT with JMRI v.5.13.2
 
 ## Links
 

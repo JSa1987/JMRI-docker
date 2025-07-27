@@ -1,12 +1,12 @@
 #!/bin/bash
-mkdir -p /home/jmri/.config/
-cp -r -n /var/opt/config-default/* /home/jmri/.config/
+echo "Start script"
 mkdir -p /home/jmri/Desktop/
 cp -n /var/opt/Desktop-default/* /home/jmri/Desktop/
+mkdir -p /home/jmri/.local/share/applications/
+cp -n /var/opt/Desktop-default/DecoderPro.desktop /home/jmri/.local/share/applications/DecoderPro.desktop
+cp -n /var/opt/Desktop-default/PanelPro.desktop /home/jmri/.local/share/applications/PanelPro.desktop
 mkdir -p /home/jmri/.jmri/
 cp -r -n /var/opt/jmri-default/* /home/jmri/.jmri/
-mkdir -p /home/jmri/.config/autostart/
-cp -n /var/opt/Desktop-default/PanelPro.desktop /home/jmri/.config/autostart/PanelPro.desktop
 
 chown -R jmri:jmri /home/jmri
 chmod -R 777 /home/jmri
