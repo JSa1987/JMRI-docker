@@ -125,9 +125,9 @@ RUN rm -vf /opt/lib*.deb; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Download and extract JMRI 5.13.2
-RUN wget https://builds.jmri.org/jenkins/job/testreleases/job/5.13.2/lastSuccessfulBuild/artifact/dist/release/JMRI.5.13.2+Rc2ecdaf40b.tgz -P /tmp
-RUN tar xzf /tmp/JMRI.5.13.2+Rc2ecdaf40b.tgz -C /opt
-RUN rm /tmp/JMRI.5.13.2+Rc2ecdaf40b.tgz
+RUN wget https://builds.jmri.org/jenkins/job/testreleases/job/5.13.3/lastSuccessfulBuild/artifact/dist/release/JMRI.5.13.3+Rf64a88e8b8.tgz -P /tmp
+RUN tar xzf /tmp/JMRI.5.13.3+Rf64a88e8b8.tgz -C /opt
+RUN rm /tmp/JMRI.5.13.3+Rf64a88e8b8.tgz
 RUN chown -R jmri:jmri /opt/JMRI
 
 #Add JMRI to Application Menu
