@@ -1,5 +1,7 @@
 FROM debian:trixie-slim
 
+ENV JMRI_DOWNLOAD_URL=https://builds.jmri.org/jenkins/job/testreleases/job/5.13.3/lastSuccessfulBuild/artifact/dist/release/JMRI.5.13.3+Rf64a88e8b8.tgz
+
 ENV DISPLAY=:1 \
     VNC_PORT=5901 \
     NO_VNC_PORT=6901 \
@@ -22,23 +24,31 @@ ENV QT_X11_NO_MITSHM=1 \
 # for example de_DE for german.
 ENV LANG=en_US.UTF-8
 
+# In order:
+# Install system basics: dbus-x11 procps psmisc kmod
+# Install DE essentials: xdg-utils xdg-user-dirs menu-xdg desktop-file-utils
+# Install LXQT desktop: lxqt-core qtwayland5 xfwm4 featherpad lxqt-about lxqt-config lxqt-qtplugin oxygen-icon-theme lxqt-system-theme qlipper qterminal
+# Install environment for noVNC: sudo git ca-certificates xvfb xauth tigervnc-standalone-server tigervnc-common python3
+# Install Environment for JMRI and install additional software: wget bzip2 openjdk-21-jre usbutils vim firefox-esr nano
+# Clean up
+
 RUN apt-get update && \
-    apt-get install -y dbus-x11 procps psmisc && \
-    apt-get install -y kmod && \
-    apt-get install -y --no-install-recommends xdg-utils xdg-user-dirs \
-                       menu-xdg desktop-file-utils
-# mesa-utils mesa-utils-extra libxv1 xz-utils mime-support
-
-RUN echo $LANG UTF-8 > /etc/locale.gen && \
-    apt-get install -y locales && \
-    update-locale --reset LANG=$LANG
-
-# LXQT desktop
-RUN apt-get install -y --no-install-recommends \
-        lxqt-core qtwayland5 xfwm4 && \
+    apt-get install -y \
+    dbus-x11 procps psmisc kmod && \
     apt-get install -y --no-install-recommends \
-        featherpad lxqt-about lxqt-config lxqt-qtplugin oxygen-icon-theme lxqt-system-theme\
-        qlipper qterminal
+    xdg-utils xdg-user-dirs menu-xdg desktop-file-utils && \
+    echo $LANG UTF-8 > /etc/locale.gen && \
+    apt-get install -y locales && \
+    update-locale --reset LANG=$LANG && \
+    apt-get install -y --no-install-recommends \
+    lxqt-core qtwayland5 xfwm4 featherpad lxqt-about lxqt-config lxqt-qtplugin oxygen-icon-theme lxqt-system-theme qlipper qterminal && \   
+    apt-get install --no-install-recommends -y \
+    sudo git ca-certificates xvfb xauth tigervnc-standalone-server tigervnc-common python3 && \ 
+    apt-get install --no-install-recommends -y \
+    wget bzip2 openjdk-21-jre usbutils vim firefox-esr nano && \
+    rm -vf /opt/lib*.deb; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # config lxqt
 RUN mkdir -p /etc/skel/.config/lxqt && \
@@ -95,12 +105,6 @@ icon=/usr/share/lxqt/graphics/helix_60.png\n\
 type=fancymenu\n\
 ' >> /etc/xdg/lxqt/panel.conf
 
-#Install environment for noVNC
-RUN apt-get install --no-install-recommends -y \
-    sudo git ca-certificates xvfb xauth tigervnc-standalone-server tigervnc-common python3
-# curl gpg  x11-xserver-utils libnss3 libnspr4 libasound2 libgbm1 fonts-liberation
-
-
 # Install NOVNC.
 RUN     git clone --branch v1.6.0 --single-branch https://github.com/novnc/noVNC.git /opt/noVNC; \
         git clone --branch v0.13.0 --single-branch https://github.com/novnc/websockify.git /opt/noVNC/utils/websockify; \
@@ -115,20 +119,9 @@ RUN adduser jmri sudo;\
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN adduser jmri dialout
 
-# Setup environment for JMRI and install additional software (vim, Firefox etc.)
-RUN apt-get install --no-install-recommends -y \
-    wget bzip2 openjdk-21-jre usbutils vim firefox-esr nano
-
-#Clean up
-RUN rm -vf /opt/lib*.deb; \
-    apt-get clean; \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Download and extract JMRI 5.13.2
-RUN wget https://builds.jmri.org/jenkins/job/testreleases/job/5.13.3/lastSuccessfulBuild/artifact/dist/release/JMRI.5.13.3+Rf64a88e8b8.tgz -P /tmp
-RUN tar xzf /tmp/JMRI.5.13.3+Rf64a88e8b8.tgz -C /opt
-RUN rm /tmp/JMRI.5.13.3+Rf64a88e8b8.tgz
-RUN chown -R jmri:jmri /opt/JMRI
+# Download and extract JMRI
+RUN wget -nv $JMRI_DOWNLOAD_URL -O - | tar xz -C /opt && \
+    chown -R jmri:jmri /opt/JMRI
 
 #Add JMRI to Application Menu
 RUN sed -i '/<!-- Accessories submenu -->/i \
