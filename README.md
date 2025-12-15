@@ -2,12 +2,12 @@
 
 ## Overview
 
-Containerized installation of Java Model Railroad Interface (https://www.jmri.org/). The light-weight desktop environment accessible from the browser with NoVNC is based on [piopi/docker-desktop](https://github.com/piopi/docker-desktop).
+Containerized installation of Java Model Railroad Interface (https://www.jmri.org/) with a light-weight desktop environment accessible from a web browser via NoVNC (based on [piopi/docker-desktop](https://github.com/piopi/docker-desktop)).
 
 ## Usage
 
 The image comes with noVNC to allow the user to view the desktop environment running JMRI within their browsers. You will be able to access the noVNC windows at [http://localhost:6901](http://localhost:6901) or use your VNC viewer with `localhost:5901`.
-JMRI WebServer and WiThrottle are enabled in the default configurations. These are accessible respectively at [http://localhost:12080](http://localhost:12080) and `hostname:12090`.
+The JMRI WebServer and WiThrottle are enabled in the default configurations. These are accessible respectively at [http://localhost:12080](http://localhost:12080) and `hostname:12090`.
 
 ![](/screenshots/Capture.png)
 *noVNC view of the Container running JMRI*
@@ -199,8 +199,8 @@ DockerHub link of the images:
 - [Xvfb](http://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml) - X11 in a virtual framebuffer
 - [TigerVNC](https://github.com/TigerVNC/tigervnc) - A VNC server that scrapes the above X11 server
 - [noVNC](https://github.com/novnc/noVNC) - A HTML5 canvas vnc viewer
-- [xfce4](https://www.xfce.org/) - A small desktop environment
-- [openjdk-17-jre](https://packages.debian.org/sid/openjdk-17-jre) - Full Java runtime environment
+- [LXQt](https://lxqt-project.org/) - The Lightweight Qt Desktop Environment
+- [openjdk-21-jre](https://packages.debian.org/trixie/openjdk-21-jre) - Full Java runtime environment
 - [JMRI](https://www.jmri.org/) - Java Model Railroad Interface
 
 ## Releases
@@ -208,8 +208,9 @@ DockerHub link of the images:
 - v5.8 07-Oct-2024 - Debian 12 (Bookworm), JRE 17, XFCE4 with JMRI v5.8 - [Release notes](https://www.jmri.org/releasenotes/jmri5.8.shtml)
 - v5.10 27-Dec-2024 - Debian 12 (Bookworm), JRE 17, XFCE4 with JMRI v5.10 - [Release notes](https://www.jmri.org/releasenotes/jmri5.10.shtml)
 - v5.12 21-Jun-2024 - Debian 12 (Bookworm), JRE 17, XFCE4 with JMRI v5.12 - [Release notes](https://www.jmri.org/releasenotes/jmri5.12.shtml)
-- Stable - Currently Debian 12 (Bookworm), JRE 17, XFCE4 with JMRI v5.12
-- Testing - Currently Debian Trixie, JRE 21, LXQT with JMRI v.5.13.7
+- v5.14 14-Dec-2025 - Debian 13 (Trixie), JRE 21, LXQT with JMRI v5.14 - [Release notes](https://www.jmri.org/releasenotes/jmri5.14.shtml)
+- Stable - Currently Debian 13 (Trixie), JRE 21, LXQT  with JMRI v5.14
+- Testing - Currently Debian 13 (Trixie), JRE 21, LXQT with JMRI v.5.13.7
 
 ## Links
 
