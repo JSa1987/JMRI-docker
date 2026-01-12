@@ -146,7 +146,7 @@ RUN echo  "debian version:  $(cat /etc/debian_version) \n" \
 EXPOSE $VNC_PORT $NO_VNC_PORT $WEBSERVER_PORT 12080 12090 1234 2056 4303 2048
 
 #Copy default jmri configurations to /var/opt
-COPY assets/ /var/opt
+COPY --chmod=755 --chown=jmri:jmri assets/ /var/opt
 #Copy entrypoint.sh and set it as entrypoint
-COPY scripts/entrypoint.sh /src
+COPY --chmod=755 --chown=jmri:jmri scripts/entrypoint.sh /src/entrypoint.sh
 ENTRYPOINT ["/src/entrypoint.sh"]
