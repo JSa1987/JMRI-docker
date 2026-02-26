@@ -187,13 +187,6 @@ Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 ```Shell
 docker run -d --device /dev/ttyUSBx:/dev/ttyUSB0 -p 6901:6901 -p 5901:5901 -p 12080:12080 -p 12090:12090 -v jmri-home:/home/jmri --name jmri jsa1987/jmri-docker:stable
 ```
-
-## DockerHub
-
-DockerHub link of the images:
-
-- [https://hub.docker.com/r/jsa1987/jmri-docker](https://hub.docker.com/r/jsa1987/jmri-docker)
-
 ## Image Contents
 
 - [Xvfb](http://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml) - X11 in a virtual framebuffer
@@ -210,7 +203,7 @@ DockerHub link of the images:
 - v5.12 21-Jun-2024 - Debian 12 (Bookworm), JRE 17, XFCE4 with JMRI v5.12 - [Release notes](https://www.jmri.org/releasenotes/jmri5.12.shtml)
 - v5.14 14-Dec-2025 - Debian 13 (Trixie), JRE 21, LXQT with JMRI v5.14 - [Release notes](https://www.jmri.org/releasenotes/jmri5.14.shtml)
 - Stable - Currently Debian 13 (Trixie), JRE 21, LXQT  with JMRI v5.14
-- Testing - Currently Debian 13 (Trixie), JRE 21, LXQT with JMRI v.5.15.3
+- Testing - Currently Debian 13 (Trixie), JRE 21, LXQT with JMRI v.5.15.4
 
 ## Links
 
