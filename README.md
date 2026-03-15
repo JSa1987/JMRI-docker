@@ -9,7 +9,7 @@ Containerized installation of Java Model Railroad Interface (https://www.jmri.or
 The image comes with noVNC to allow the user to view the desktop environment running JMRI within their browsers. You will be able to access the noVNC windows at [http://localhost:6901](http://localhost:6901) or use your VNC viewer with `localhost:5901`.
 The JMRI WebServer and WiThrottle are enabled in the default configurations. These are accessible respectively at [http://localhost:12080](http://localhost:12080) and `hostname:12090`.
 
-![](/screenshots/Capture.png)
+![](/screenshots/jmri-docker_screenshot.png)
 *noVNC view of the Container running JMRI*
 
 ## Hardware support
@@ -203,7 +203,7 @@ docker run -d --device /dev/ttyUSBx:/dev/ttyUSB0 -p 6901:6901 -p 5901:5901 -p 12
 - v5.12 21-Jun-2024 - Debian 12 (Bookworm), JRE 17, XFCE4 with JMRI v5.12 - [Release notes](https://www.jmri.org/releasenotes/jmri5.12.shtml)
 - v5.14 14-Dec-2025 - Debian 13 (Trixie), JRE 21, LXQT with JMRI v5.14 - [Release notes](https://www.jmri.org/releasenotes/jmri5.14.shtml)
 - Stable - Currently Debian 13 (Trixie), JRE 21, LXQT  with JMRI v5.14
-- Testing - Currently Debian 13 (Trixie), JRE 21, LXQT with JMRI v.5.15.4
+- Testing - Currently Debian 13 (Trixie), JRE 21, LXQT with JMRI v.5.15.5
 
 ## Links
 
