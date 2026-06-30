@@ -1,7 +1,6 @@
 FROM debian:trixie-slim
 
-ENV JMRI_DOWNLOAD_URL=https://builds.jmri.org/jenkins/job/testreleases/job/5.15.8/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.8+R0f6e5379d8.tgz
-ENV DISPLAY=:1 \
+ENV JMRI_DOWNLOAD_URL=https://builds.jmri.org/jenkins/job/testreleases/job/5.15.9/lastSuccessfulBuild/artifact/dist/release/JMRI.5.15.9+R1cad2d78d8.tgz \
     VNC_PORT=5901 \
     NO_VNC_PORT=6901 \
     VNC_COL_DEPTH=32 \
